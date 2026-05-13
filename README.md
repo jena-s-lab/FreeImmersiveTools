@@ -148,7 +148,3 @@ PRD.md                Product requirements document
 - Vintage Story API docs: <https://apidocs.vintagestory.at/>
 - ConfigLib repository: <https://github.com/maltiez2/vsmod_configlib>
 - ConfigLib JSON API: <https://github.com/maltiez2/vsmod_configlib/wiki/JSON-API>
-
-## License
-
-See [LICENSE](LICENSE).
