@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "file": "freeimmersivetools.json",
+    "patches": {},
+    "settings": [
+        {
+            "type": "separator",
+            "title": "fit-config-section-startup-logs"
+        },
+        {
+            "code": "EnableSharedStartupLog",
+            "type": "boolean",
+            "default": true,
+            "ingui": "fit-config-enable-shared-startup-log",
+            "comment": "fit-config-enable-shared-startup-log-comment"
+        },
+        {
+            "code": "EnableServerStartupLog",
+            "type": "boolean",
+            "default": true,
+            "ingui": "fit-config-enable-server-startup-log",
+            "comment": "fit-config-enable-server-startup-log-comment"
+        },
+        {
+            "code": "EnableClientStartupLog",
+            "type": "boolean",
+            "default": true,
+            "ingui": "fit-config-enable-client-startup-log",
+            "comment": "fit-config-enable-client-startup-log-comment"
+        }
+    ]
+}

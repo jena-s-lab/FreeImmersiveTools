@@ -1,70 +1,154 @@
-# Vintage Story Mod Template
+# Free Immersive Tools
 
-This repository contains a configured .NET 7 mod for Visual Studio, Visual Studio Code and Rider that let's you start Vintage Story and add your own code to it. Supports logging and as well as debugging.
+Free Immersive Tools is a Vintage Story mod that aims to turn eligible tool-based crafting recipes into in-world interactions.
 
+Officially, the F stands for "Free." Unofficially, its exact expansion may depend on how many crafting menus you had to click through that day.
 
+The target behavior is: tool + in-world placeable ingredient = altered tool + recipe output. For example, using an axe on a placed log should produce the same result, ingredient consumption, and tool wear that the original recipe would have produced in a crafting grid.
 
-## Usage
-- Get a copy of this template by either using the "Use this Template" on github or cloning it or downloading a .zip file.
-- Open the Project with your preferred IDE
-- Run the template
+If the tool does its job in-world and the result feels a little more forcefully immersive than before, that is very much the idea.
 
+## Project status
 
-The template uses the Cake build system to produce a mod ready to release for you.
-You can create a release with one of the following methods:
-- In Visual Studio and Rider Select to run the CakeBuilder Project.
-- In Visual Studio Code click on "Terminal" > "Run Task" > "package"
-- run the build.ps1 or build.sh
+This project is in active early development.
 
-This will then produce the `mymodid_1.0.0.zip` inside the `Release` folder in the project root folder.
+The repository currently contains the development scaffold, build and debug workflow, persisted configuration, config migration support, and optional ConfigLib integration for in-game editing of current settings. The core recipe adaptation and in-world execution system is planned work and is documented in [PRD.md](PRD.md).
 
+## Goals
 
-##  Linux / Mac
-This sample is preconfigured for Windows if you want to use it on Linux or Mac you need to change the path for the Vintage Story (Server) binaries since those are now platform dependent with .NET 7. 
+- Add immersive in-world execution for eligible tool + placeable-ingredient recipes.
+- Preserve vanilla and modded recipe parity for inputs, outputs, and tool alteration.
+- Stay compatible with other mods by discovering recipes late enough in the lifecycle.
+- Keep optional integrations, such as ConfigLib, non-breaking when absent.
 
-### Rider
-If you use Rider on Linux or Mac you will need to change in
-`modtemplate/Properties/launchSettings.json`
+## Current implementation
+
+- .NET 10 mod project and Cake-based packaging pipeline.
+- VS Code tasks and launch profiles configured to use `bin/latest` as the local Vintage Story install.
+- File-backed mod config with default generation and version migration.
+- Optional ConfigLib asset integration for editing current startup logging settings in-game.
+- Initial feature-oriented project structure under `ModSystems`, `Config`, `Behaviors`, and `Integration`.
+
+## Requirements
+
+- .NET 10 SDK
+- Vintage Story game files available locally
+- `VINTAGE_STORY` environment variable set for CLI, Rider, or Visual Studio workflows
+
+This repository expects a local Vintage Story install to be available through `bin/latest`. In VS Code, build and launch configurations already set `VINTAGE_STORY` to `${workspaceFolder}/bin/latest` automatically.
+
+## Setup
+
+1. Place a Vintage Story install inside `bin/` and point `bin/latest` at the version you want to develop against.
+2. For terminal, Rider, or Visual Studio workflows, export `VINTAGE_STORY` to that same folder.
+3. Build and run the mod from your IDE or from the command line.
+
+### Linux and macOS
+
+```sh
+export VINTAGE_STORY="$PWD/bin/latest"
 ```
-"executablePath": "$(VINTAGE_STORY)/Vintagestory.exe",
-"executablePath": "$(VINTAGE_STORY)/VintagestoryServer.exe",
-```
-to 
-```
-"executablePath": "$(VINTAGE_STORY)/Vintagestory",
-"executablePath": "$(VINTAGE_STORY)/VintagestoryServer",
+
+### Windows PowerShell
+
+```powershell
+$env:VINTAGE_STORY = "$PWD/bin/latest"
 ```
 
-## Info General
+## Development
 
-Since version 1.18.8-rc1 Vintage Story uses .NET 7 as its base framework. This means from now on mods can be targeted towards it and make use of the latest C# 11 language features.
+### VS Code
 
-Further the new way of creating mods uses a [dotnet template package](https://www.nuget.org/packages/VintageStory.Mod.Templates/).
+Available tasks:
 
-This basically allows you to create a mod directly from Visual Studio, Rider or the command line (`dotnet new vsmod`) for more details how to use it see our [wiki page](https://wiki.vintagestory.at/index.php/Modding:Setting_up_your_Development_Environment).
+- `build`: Builds the mod project in Debug.
+- `build (Cake)`: Builds the packaging project.
+- `package`: Runs the Cake packaging pipeline.
 
-It supports options so you can easily add what ever dependency you may need in you next modding project.
+Available debug profiles:
 
-The new template also just houses a single mod by default (you can still manually add more if wanted). We think it is better to have the mods separated in their own repositories and Solutions.
+- `Launch Client (Debug)`
+- `Launch Server`
+- `CakeBuild`
 
-Further with the new template package and the cake build system there is not much need for the `vsmodtools` tool hopefully, which means less code to be maintained by us.
+These launch profiles already set `VINTAGE_STORY` to `${workspaceFolder}/bin/latest`.
 
-We are also now supporting Visual Studio, Visual Studio Code and Rider with the new SDK style project and templates.
+### Rider and Visual Studio
 
-## Cake build system
+Set `VINTAGE_STORY` before launching from the IDE.
 
-The new template also comes with the cake build system https://cakebuild.net/ found in the file [CakeBuild/Program.cs](CakeBuild/Program.cs).
-It is also used in the games repo to build the game for each platform (Windows x64, Linux x64, MacOs x64) and eventually Arm x64 as well at some point.
+Launch profiles in [FreeImmersiveTools/Properties/launchSettings.json](FreeImmersiveTools/Properties/launchSettings.json):
 
-But that is not all cake can do for us.
-Since we use the `Cake Frosting` setup which essentially adds another Project to our solution where we can write C# code to define our build and package procedure. Further we added a Json Validation step to it so before a build is made it will verify that all json files are at least parsable by `Newtonsoft.Json` to avoid simple mistakes. And if you want to use any Testing library you can also add it to the Cake build system to run your test when you create a mod.zip for release.
+- `Client` and `Server` for Linux/macOS
+- `Client (Windows)` and `Server (Windows)` for Windows
 
+### Command line
 
-## Migrating Mods to .NET 7
+Build the mod:
 
-To migrate your mod to .NET 7 we would recommend you to create a new project with our new template (checkout our updated [wiki page](https://wiki.vintagestory.at/index.php/Modding:Setting_up_your_Development_Environment) for that) and copy over your old code. Additionally you may need to add any special references you need for your mod.
+```sh
+export VINTAGE_STORY="$PWD/bin/latest"
+dotnet build -c Debug FreeImmersiveTools/FreeImmersiveTools.csproj
+```
 
-Then you may have to make some code changes so your mod works with the .NET 7 version of the game. For most mods this should be just minor changes.
+Build the Cake project:
 
-Once that is done it should be ready to be started within you preferred IDE. So you can also benefit from new C# 11 language features as well as the cake build system.
+```sh
+export VINTAGE_STORY="$PWD/bin/latest"
+dotnet build -c Debug CakeBuild/CakeBuild.csproj
+```
 
+Package the mod:
+
+```sh
+export VINTAGE_STORY="$PWD/bin/latest"
+dotnet run --project CakeBuild/CakeBuild.csproj
+```
+
+## Configuration
+
+The mod stores its config as `freeimmersivetools.json` in the Vintage Story mod config directory.
+
+Current settings:
+
+- `EnableSharedStartupLog`
+- `EnableServerStartupLog`
+- `EnableClientStartupLog`
+
+The config file is generated automatically with defaults on first load. Older config versions are migrated forward when possible.
+
+## ConfigLib support
+
+ConfigLib support is optional.
+
+If ConfigLib is installed and active, the current settings can be edited through its in-game UI using the integration asset at `assets/freeimmersivetools/config/configlib-patches.json`. If ConfigLib is not installed, the mod continues to work through its normal file-backed config.
+
+## Packaging output
+
+The Cake pipeline writes release artifacts to `Releases/` and produces a zip named like:
+
+```text
+freeimmersivetools_<version>.zip
+```
+
+The version comes from [FreeImmersiveTools/modinfo.json](FreeImmersiveTools/modinfo.json).
+
+## Repository layout
+
+```text
+FreeImmersiveTools/   Main mod project
+CakeBuild/            Packaging and JSON validation pipeline
+bin/latest/           Local Vintage Story install used for development
+PRD.md                Product requirements document
+```
+
+## References
+
+- Vintage Story modding wiki: <https://wiki.vintagestory.at/Modding>
+- Vintage Story API docs: <https://apidocs.vintagestory.at/>
+- ConfigLib repository: <https://github.com/maltiez2/vsmod_configlib>
+- ConfigLib JSON API: <https://github.com/maltiez2/vsmod_configlib/wiki/JSON-API>
+
+## License
+
+See [LICENSE](LICENSE).

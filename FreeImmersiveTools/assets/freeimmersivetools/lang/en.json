@@ -1,0 +1,10 @@
+{
+    "hello": "hello world!",
+    "fit-config-section-startup-logs": "Startup Logging",
+    "fit-config-enable-shared-startup-log": "Enable shared startup log",
+    "fit-config-enable-shared-startup-log-comment": "Controls the startup log message emitted on both client and server during shared initialization.",
+    "fit-config-enable-server-startup-log": "Enable server startup log",
+    "fit-config-enable-server-startup-log-comment": "Controls the server-side startup log message.",
+    "fit-config-enable-client-startup-log": "Enable client startup log",
+    "fit-config-enable-client-startup-log-comment": "Controls the client-side startup log message."
+}

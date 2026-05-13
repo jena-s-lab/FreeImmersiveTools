@@ -673,3 +673,8 @@ fabric.properties
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp,visualstudio,visualstudiocode,rider
+.env
+litellm.config.yml
+.github/prompts/PRD-creation.prompt.md
+.serena/.gitignore
+.serena/project.yml

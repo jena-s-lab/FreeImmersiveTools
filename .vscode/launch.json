@@ -8,20 +8,25 @@
             "name": "Launch Client (Debug)",
             "type": "coreclr",
             "request": "launch",
-            "program": "${env:VINTAGE_STORY}/Vintagestory.exe",
+            "program": "${workspaceFolder}/bin/latest/Vintagestory.exe",
             "linux": {
-                "program": "${env:VINTAGE_STORY}/Vintagestory"
+                "program": "${workspaceFolder}/bin/latest/Vintagestory"
             },
             "osx": {
-                "program": "${env:VINTAGE_STORY}/Vintagestory"
+                "program": "${workspaceFolder}/bin/latest/Vintagestory"
             },
             "preLaunchTask": "build",
+            "env": {
+                "VINTAGE_STORY": "${workspaceFolder}/bin/latest",
+                "FONTCONFIG_FILE": "${workspaceFolder}/bin/latest/fonts.conf"
+            },
+            "cwd": "${workspaceFolder}/bin/latest",
             "args": [
                 // "--playStyle" , "preset-surviveandbuild",
                 // "--openWorld" , "modding test world",
                 "--tracelog",
                 "--addModPath",
-                "${workspaceFolder}/ModTemplate/bin/Debug/Mods"
+                "${workspaceFolder}/FreeImmersiveTools/bin/Debug/Mods"
             ],
             "console": "internalConsole",
             "stopAtEntry": false
@@ -30,18 +35,22 @@
             "name": "Launch Server",
             "type": "coreclr",
             "request": "launch",
-            "program": "${env:VINTAGE_STORY}/VintagestoryServer.exe",
+            "program": "${workspaceFolder}/bin/latest/VintagestoryServer.exe",
             "linux": {
-                "program": "${env:VINTAGE_STORY}/VintagestoryServer"
+                "program": "${workspaceFolder}/bin/latest/VintagestoryServer"
             },
             "osx": {
-                "program": "${env:VINTAGE_STORY}/VintagestoryServer"
+                "program": "${workspaceFolder}/bin/latest/VintagestoryServer"
             },
             "preLaunchTask": "build",
+            "env": {
+                "VINTAGE_STORY": "${workspaceFolder}/bin/latest"
+            },
+            "cwd": "${workspaceFolder}/bin/latest",
             "args": [
                 "--tracelog",
                 "--addModPath",
-                "${workspaceFolder}/ModTemplate/bin/Debug/Mods"
+                "${workspaceFolder}/FreeImmersiveTools/bin/Debug/Mods"
             ],
             "console": "internalConsole",
             "stopAtEntry": false
@@ -51,11 +60,34 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build (Cake)",
-            "program": "${workspaceFolder}/CakeBuild/bin/Debug/net7.0/CakeBuild.dll",
+            "env": {
+                "VINTAGE_STORY": "${workspaceFolder}/bin/latest"
+            },
+            "program": "${workspaceFolder}/CakeBuild/bin/Debug/net10.0/CakeBuild.dll",
             "args": [],
             "cwd": "${workspaceFolder}/CakeBuild",
             "stopAtEntry": false,
             "console": "internalConsole"
+        },
+        {
+            "name": "Start VS task + Attach",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/bin/latest/Vintagestory.dll",
+            "args": [
+                "--addModPath",
+                "${workspaceFolder}/bin/Debug/Mods/mod",
+                "--openWorld",
+                "mod-testing",
+                "--playStyle",
+                "creativebuilding",
+                "--tracelog"
+            ],
+            "cwd": "${workspaceFolder}/bin/vs",
+            "stopAtEntry": false,
+            "console": "integratedTerminal",
+            "justMyCode": false
         }
     ]
 }

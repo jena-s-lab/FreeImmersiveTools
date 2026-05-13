@@ -9,8 +9,13 @@
                 "build",
                 "-c",
                 "Debug",
-                "${workspaceFolder}/ModTemplate/ModTemplate.csproj"
+                "${workspaceFolder}/FreeImmersiveTools/FreeImmersiveTools.csproj"
             ],
+            "options": {
+                "env": {
+                    "VINTAGE_STORY": "${workspaceFolder}/bin/latest"
+                }
+            },
             "problemMatcher": "$msCompile"
         },
         {
@@ -22,6 +27,11 @@
                 "--project",
                 "${workspaceFolder}/CakeBuild/CakeBuild.csproj"
             ],
+            "options": {
+                "env": {
+                    "VINTAGE_STORY": "${workspaceFolder}/bin/latest"
+                }
+            },
             "problemMatcher": "$msCompile"
         },
         {
@@ -34,6 +44,11 @@
                 "Debug",
                 "${workspaceFolder}/CakeBuild/CakeBuild.csproj"
             ],
+            "options": {
+                "env": {
+                    "VINTAGE_STORY": "${workspaceFolder}/bin/latest"
+                }
+            },
             "problemMatcher": "$msCompile"
         }
     ]

@@ -1,0 +1,15 @@
+{
+    "type": "code",
+    "modid": "freeimmersivetools",
+    "name": "Free Immersive Tools",
+    "authors": [
+        "Jena_Thornwyrd"
+    ],
+    "description": "Tool-based crafting recipes to in-world interactions.Officially, the F stands for \"Free.\" Unofficially, its exact expansion may depend on how many crafting menus you had to click through that day.",
+    "version": "1.0.0",
+    "dependencies": {
+    },
+    "side" : "Universal",
+    "requiredOnClient": true,
+    "requiredOnServer": true
+}
